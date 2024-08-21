@@ -30,6 +30,8 @@
         {
             TxtNombreTarea = new TextBox();
             BtnAgregarTarea = new Button();
+            flowPanelTareaPendientes = new FlowLayoutPanel();
+            btnEliminarUltimaTarea = new Button();
             SuspendLayout();
             // 
             // TxtNombreTarea
@@ -52,11 +54,32 @@
             BtnAgregarTarea.UseVisualStyleBackColor = false;
             BtnAgregarTarea.Click += BtnAgregarTarea_Click;
             // 
+            // flowPanelTareaPendientes
+            // 
+            flowPanelTareaPendientes.BackColor = Color.CadetBlue;
+            flowPanelTareaPendientes.Location = new Point(48, 144);
+            flowPanelTareaPendientes.Name = "flowPanelTareaPendientes";
+            flowPanelTareaPendientes.Size = new Size(181, 228);
+            flowPanelTareaPendientes.TabIndex = 2;
+            // 
+            // btnEliminarUltimaTarea
+            // 
+            btnEliminarUltimaTarea.BackColor = Color.Brown;
+            btnEliminarUltimaTarea.Location = new Point(630, 144);
+            btnEliminarUltimaTarea.Name = "btnEliminarUltimaTarea";
+            btnEliminarUltimaTarea.Size = new Size(113, 66);
+            btnEliminarUltimaTarea.TabIndex = 3;
+            btnEliminarUltimaTarea.Text = "Eliminar Ultima Tarea";
+            btnEliminarUltimaTarea.UseVisualStyleBackColor = false;
+            btnEliminarUltimaTarea.Click += btnEliminarUltimaTarea_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnEliminarUltimaTarea);
+            Controls.Add(flowPanelTareaPendientes);
             Controls.Add(BtnAgregarTarea);
             Controls.Add(TxtNombreTarea);
             Name = "Form1";
@@ -69,5 +92,7 @@
 
         private TextBox TxtNombreTarea;
         private Button BtnAgregarTarea;
+        private FlowLayoutPanel flowPanelTareaPendientes;
+        private Button btnEliminarUltimaTarea;
     }
 }

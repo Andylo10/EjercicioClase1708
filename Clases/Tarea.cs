@@ -4,27 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EjercicioClase1708.Clase
+namespace TellerEventos.Clases
 {
     internal class Tarea
     {
-        public Tarea()
-        {
-        }
-        public string Nombre { get; set; }
-        public string Estado { get; set; }
+        public string nombre { get; set; }
+        public string estado { get; set; }
+
         public readonly DateTime fechaCreacion;
 
         public Tarea(string nombre, string estado)
         {
-            Nombre = nombre;
-            Estado = estado;
-            fechaCreacion = DateTime.Now; 
+            this.fechaCreacion = DateTime.Now;
+            this.nombre = nombre;
+            this.estado = estado;
         }
     }
 }
-
-
-        
-    
-
