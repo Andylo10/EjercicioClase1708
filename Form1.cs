@@ -45,7 +45,7 @@ namespace EjercicioClase1708
 
         private void renderizarTareas()
         {
-            flowPanelTareaPendientes.Controls.Clear(); 
+            flowPanelTareaPendientes.Controls.Clear();
 
             foreach (Tarea tarea in tareas)
             {
@@ -60,7 +60,7 @@ namespace EjercicioClase1708
                     BorderStyle = BorderStyle.FixedSingle
                 };
 
-                
+
                 tarjeta.DoubleClick += (sender, e) =>
                 {
                     Label etiqueta = (Label)sender;
@@ -68,23 +68,23 @@ namespace EjercicioClase1708
                     if (tareaAEliminar != null)
                     {
                         tareas.Remove(tareaAEliminar);
-                        renderizarTareas(); 
+                        renderizarTareas();
                     }
                 };
 
-                    tarjeta.MouseHover += (sender, e) =>
-                {
-                    tarjeta.BackColor = Color.Gray;
-                    tarjeta.Font = new Font(tarjeta.Font, FontStyle.Bold);
-                    tarjeta.Cursor = Cursors.Hand;
-                };
-                
+                tarjeta.MouseHover += (sender, e) =>
+            {
+                tarjeta.BackColor = Color.Gray;
+                tarjeta.Font = new Font(tarjeta.Font, FontStyle.Bold);
+                tarjeta.Cursor = Cursors.Hand;
+            };
+
                 tarjeta.MouseLeave += (sender, e) =>
                 {
                     tarjeta.BackColor = Color.MediumPurple;
                     tarjeta.Font = new Font(tarjeta.Font, FontStyle.Regular);
                 };
-                
+
                 flowPanelTareaPendientes.Controls.Add(tarjeta);
             }
         }
@@ -94,9 +94,19 @@ namespace EjercicioClase1708
             if (tareas.Count > 0)
             {
                 tareas.RemoveAt(tareas.Count - 1);
-                renderizarTareas(); 
+                renderizarTareas();
 
             }
+        }
+
+        private void MensajeParaBotones_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
