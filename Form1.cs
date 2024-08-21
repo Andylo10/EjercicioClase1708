@@ -45,7 +45,7 @@ namespace EjercicioClase1708
 
         private void renderizarTareas()
         {
-            flowPanelTareaPendientes.Controls.Clear(); // Clear existing controls on the panel
+            flowPanelTareaPendientes.Controls.Clear(); 
 
             foreach (Tarea tarea in tareas)
             {
@@ -60,7 +60,7 @@ namespace EjercicioClase1708
                     BorderStyle = BorderStyle.FixedSingle
                 };
 
-                // Double-click event handler to remove the clicked task
+                
                 tarjeta.DoubleClick += (sender, e) =>
                 {
                     Label etiqueta = (Label)sender;
@@ -68,26 +68,23 @@ namespace EjercicioClase1708
                     if (tareaAEliminar != null)
                     {
                         tareas.Remove(tareaAEliminar);
-                        renderizarTareas(); // Refresh the panel after removal
+                        renderizarTareas(); 
                     }
                 };
 
-                // MouseHover event handler to change the appearance when hovering
-                tarjeta.MouseHover += (sender, e) =>
+                    tarjeta.MouseHover += (sender, e) =>
                 {
                     tarjeta.BackColor = Color.Gray;
                     tarjeta.Font = new Font(tarjeta.Font, FontStyle.Bold);
                     tarjeta.Cursor = Cursors.Hand;
                 };
-
-                // MouseLeave event handler to revert appearance when not hovering
+                
                 tarjeta.MouseLeave += (sender, e) =>
                 {
                     tarjeta.BackColor = Color.MediumPurple;
                     tarjeta.Font = new Font(tarjeta.Font, FontStyle.Regular);
                 };
-
-                // Add the label (task card) to the flow panel
+                
                 flowPanelTareaPendientes.Controls.Add(tarjeta);
             }
         }
@@ -96,8 +93,8 @@ namespace EjercicioClase1708
         {
             if (tareas.Count > 0)
             {
-                tareas.RemoveAt(tareas.Count - 1); // Remove the last task
-                renderizarTareas(); // Refresh the panel after removal
+                tareas.RemoveAt(tareas.Count - 1);
+                renderizarTareas(); 
 
             }
         }
