@@ -8,13 +8,31 @@ namespace EjercicioClase1708
         public Form1()
         {
             InitializeComponent();
+            TxtNombreTarea.KeyPress += TxtNombreTarea_KeyPress;
         }
 
+        private void TxtNombreTarea_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                if (TxtNombreTarea.Text.Trim() == "")
+                {
+                    MessageBox.Show("Ingrese un nombre para la tarea.");
+                    return;
+                }
+                Tarea nuevaTarea = new Tarea(TxtNombreTarea.Text, "Pendiente");
+                tareas.Add(nuevaTarea);
+
+                this.renderizarTareas();
+                TxtNombreTarea.Text = "";
+            }
+        }
         private void BtnAgregarTarea_Click(object sender, EventArgs e)
         {
+
             if (TxtNombreTarea.Text.Trim() == "")
             {
-                MessageBox.Show(TxtNombreTarea.Text);
+                MessageBox.Show("Ingrese un nombre para la tarea.");
                 return;
             }
 
@@ -22,43 +40,66 @@ namespace EjercicioClase1708
             tareas.Add(nuevaTarea);
 
             this.renderizarTareas();
+            TxtNombreTarea.Text = "";
         }
 
         private void renderizarTareas()
         {
-            flowPanelTareaPendientes.Controls.Clear();
+            flowPanelTareaPendientes.Controls.Clear(); // Clear existing controls on the panel
+
             foreach (Tarea tarea in tareas)
             {
-                Label tarjeta = new Label();
-                tarjeta.Text = tarea.nombre;
-                tarjeta.AutoSize = true;
-                tarjeta.Padding = new Padding(10);
-                tarjeta.Margin = new Padding(5);
-                tarjeta.BackColor = Color.White;
-                tarjeta.ForeColor = Color.Black;
-                tarjeta.BorderStyle = BorderStyle.FixedSingle;
+                Label tarjeta = new Label
+                {
+                    Text = tarea.nombre,
+                    AutoSize = true,
+                    Padding = new Padding(10),
+                    Margin = new Padding(5),
+                    BackColor = Color.MediumPurple,
+                    ForeColor = Color.Black,
+                    BorderStyle = BorderStyle.FixedSingle
+                };
 
+                // Double-click event handler to remove the clicked task
+                tarjeta.DoubleClick += (sender, e) =>
+                {
+                    Label etiqueta = (Label)sender;
+                    Tarea tareaAEliminar = tareas.Find(t => t.nombre == etiqueta.Text);
+                    if (tareaAEliminar != null)
+                    {
+                        tareas.Remove(tareaAEliminar);
+                        renderizarTareas(); // Refresh the panel after removal
+                    }
+                };
+
+                // MouseHover event handler to change the appearance when hovering
                 tarjeta.MouseHover += (sender, e) =>
                 {
-                    tarjeta.BackColor = Color.LightGray;
+                    tarjeta.BackColor = Color.Gray;
                     tarjeta.Font = new Font(tarjeta.Font, FontStyle.Bold);
                     tarjeta.Cursor = Cursors.Hand;
                 };
 
+                // MouseLeave event handler to revert appearance when not hovering
                 tarjeta.MouseLeave += (sender, e) =>
                 {
-                    tarjeta.BackColor = Color.White;
+                    tarjeta.BackColor = Color.MediumPurple;
                     tarjeta.Font = new Font(tarjeta.Font, FontStyle.Regular);
                 };
+
+                // Add the label (task card) to the flow panel
                 flowPanelTareaPendientes.Controls.Add(tarjeta);
             }
         }
 
-
         private void btnEliminarUltimaTarea_Click(object sender, EventArgs e)
         {
-            tareas.RemoveAt(tareas.Count - 1);
-            this.renderizarTareas();
+            if (tareas.Count > 0)
+            {
+                tareas.RemoveAt(tareas.Count - 1); // Remove the last task
+                renderizarTareas(); // Refresh the panel after removal
+
+            }
         }
     }
 }

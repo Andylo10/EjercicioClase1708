@@ -37,7 +37,7 @@
             // TxtNombreTarea
             // 
             TxtNombreTarea.BackColor = Color.Thistle;
-            TxtNombreTarea.Location = new Point(48, 28);
+            TxtNombreTarea.Location = new Point(48, 48);
             TxtNombreTarea.Name = "TxtNombreTarea";
             TxtNombreTarea.PlaceholderText = "Ingrese su Tarea";
             TxtNombreTarea.Size = new Size(254, 23);
@@ -46,7 +46,7 @@
             // BtnAgregarTarea
             // 
             BtnAgregarTarea.BackColor = Color.DarkSeaGreen;
-            BtnAgregarTarea.Location = new Point(318, 24);
+            BtnAgregarTarea.Location = new Point(317, 45);
             BtnAgregarTarea.Name = "BtnAgregarTarea";
             BtnAgregarTarea.Size = new Size(99, 29);
             BtnAgregarTarea.TabIndex = 1;
@@ -56,7 +56,7 @@
             // 
             // flowPanelTareaPendientes
             // 
-            flowPanelTareaPendientes.BackColor = Color.CadetBlue;
+            flowPanelTareaPendientes.BackColor = Color.PowderBlue;
             flowPanelTareaPendientes.Location = new Point(48, 144);
             flowPanelTareaPendientes.Name = "flowPanelTareaPendientes";
             flowPanelTareaPendientes.Size = new Size(181, 228);
