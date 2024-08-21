@@ -31,7 +31,7 @@
             TxtNombreTarea = new TextBox();
             BtnAgregarTarea = new Button();
             flowPanelTareaPendientes = new FlowLayoutPanel();
-            btnEliminarUltimaTarea = new Button();
+            btnEliminarUltimaTarea = new Button(); 
             btnMoveraTareasPendientes = new Button();
             btnTareaCompletada = new Button();
             flowPanelTotalTareasPendientes = new FlowLayoutPanel();
@@ -77,7 +77,7 @@
             btnEliminarUltimaTarea.Name = "btnEliminarUltimaTarea";
             btnEliminarUltimaTarea.Size = new Size(113, 66);
             btnEliminarUltimaTarea.TabIndex = 3;
-            btnEliminarUltimaTarea.Text = "Eliminar Ultima Tarea";
+            btnEliminarUltimaTarea.Text = "Eliminar Tarea";
             btnEliminarUltimaTarea.UseVisualStyleBackColor = false;
             btnEliminarUltimaTarea.Click += btnEliminarUltimaTarea_Click;
             // 
@@ -153,7 +153,7 @@
             MensajeParaBotones.Size = new Size(205, 15);
             MensajeParaBotones.TabIndex = 11;
             MensajeParaBotones.Text = "Seleccione la Tarea y decida su Estado";
-            MensajeParaBotones.Click += MensajeParaBotones_Click;
+            
             // 
             // Form1
             // 
@@ -174,7 +174,7 @@
             Controls.Add(TxtNombreTarea);
             Name = "Form1";
             Text = "ControlTareas";
-            Load += Form1_Load;
+         
             ResumeLayout(false);
             PerformLayout();
         }
@@ -194,4 +194,5 @@
         private Label labelTareasCompletadas;
         private Label MensajeParaBotones;
     }
+    
 }
