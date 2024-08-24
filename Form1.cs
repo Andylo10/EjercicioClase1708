@@ -8,14 +8,21 @@ namespace EjercicioClase1708
 {
     public partial class Form1 : Form
     {
-        List<Tarea> tareas = new List<Tarea>(); // Lista para tareas pendientes
-        List<Tarea> totalTareasPendientes = new List<Tarea>(); // Lista para tareas movidas
-        List<Tarea> tareasCompletadas = new List<Tarea>(); // Lista para tareas completadas
-        private Tarea tareaSeleccionada; // Variable para almacenar la tarea seleccionada
+        List<Tarea> tareas = new List<Tarea>();
+        List<Tarea> totalTareasPendientes = new List<Tarea>();
+        List<Tarea> tareasCompletadas = new List<Tarea>();
+
 
         public Form1()
         {
             InitializeComponent();
+
+
+
+            cmbEstadoTarea.SelectedIndexChanged += CmbEstadoTarea_SelectedIndexChanged;
+            this.Controls.Add(cmbEstadoTarea);
+
+
             TxtNombreTarea.KeyPress += TxtNombreTarea_KeyPress;
             btnMoveraTareasPendientes.Click += btnMoveraTareasPendientes_Click;
             btnTareaCompletada.Click += btnTareaCompletada_Click;
@@ -30,7 +37,7 @@ namespace EjercicioClase1708
                 return;
             }
 
-            // Eliminar la tarea seleccionada de las listas correspondientes
+            
             if (tareas.Contains(tareaSeleccionada))
             {
                 tareas.Remove(tareaSeleccionada);
@@ -44,12 +51,12 @@ namespace EjercicioClase1708
                 tareasCompletadas.Remove(tareaSeleccionada);
             }
 
-            // Renderizar todos los paneles
+           
             renderizarTareas();
             renderizarTotalTareasPendientes();
             renderizarTareasCompletadas();
 
-            // Desmarcar la tarea seleccionada
+            // Limpiar otra vez xd
             tareaSeleccionada = null;
         }
 
@@ -74,16 +81,17 @@ namespace EjercicioClase1708
                 return;
             }
 
-            Tarea nuevaTarea = new Tarea(TxtNombreTarea.Text, "Pendiente");
+            Tarea nuevaTarea = new Tarea(TxtNombreTarea.Text, "Sin Empezar");
             tareas.Add(nuevaTarea);
 
+            
             renderizarTareas();
             TxtNombreTarea.Text = "";
         }
 
         private void renderizarTareas()
         {
-            flowPanelTareaPendientes.Controls.Clear(); 
+            flowPanelTareaPendientes.Controls.Clear();
 
             foreach (Tarea tarea in tareas)
             {
@@ -100,21 +108,20 @@ namespace EjercicioClase1708
                 return;
             }
 
-            
             tareas.Remove(tareaSeleccionada);
             totalTareasPendientes.Add(tareaSeleccionada);
 
-            
+           
             renderizarTareas();
             renderizarTotalTareasPendientes();
 
-            
+            // Limpiar
             tareaSeleccionada = null;
         }
 
         private void renderizarTotalTareasPendientes()
         {
-            flowPanelTotalTareasPendientes.Controls.Clear(); 
+            flowPanelTotalTareasPendientes.Controls.Clear();
 
             foreach (Tarea tarea in totalTareasPendientes)
             {
@@ -131,7 +138,6 @@ namespace EjercicioClase1708
                 return;
             }
 
-            
             totalTareasPendientes.Remove(tareaSeleccionada);
             tareasCompletadas.Add(tareaSeleccionada);
 
@@ -139,14 +145,14 @@ namespace EjercicioClase1708
             renderizarTotalTareasPendientes();
             renderizarTareasCompletadas();
 
-            
+            //Para Limpiar otra vez
             tareaSeleccionada = null;
         }
 
         private void renderizarTareasCompletadas()
         {
-            flowPanelTareasCompletadas.Controls.Clear(); 
-            
+            flowPanelTareasCompletadas.Controls.Clear();
+
             foreach (Tarea tarea in tareasCompletadas)
             {
                 Label tarjeta = CrearEtiquetaTarea(tarea, Color.LightGreen, flowPanelTareasCompletadas);
@@ -154,12 +160,61 @@ namespace EjercicioClase1708
             }
         }
 
+        private void CmbEstadoTarea_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tareaSeleccionada == null)
+            {
+                MessageBox.Show("Seleccione una tarea para cambiar el estado.");
+                return;
+            }
+
+            string nuevoEstado = cmbEstadoTarea.SelectedItem.ToString();
+
+            
+            if (tareaSeleccionada.estado == "Sin Empezar")
+            {
+                tareas.Remove(tareaSeleccionada);
+            }
+            else if (tareaSeleccionada.estado == "En Progreso")
+            {
+                totalTareasPendientes.Remove(tareaSeleccionada);
+            }
+            else if (tareaSeleccionada.estado == "Completada")
+            {
+                tareasCompletadas.Remove(tareaSeleccionada);
+            }
+
+          
+            tareaSeleccionada.estado = nuevoEstado;
+
+            
+            if (nuevoEstado == "Sin Empezar")
+            {
+                tareas.Add(tareaSeleccionada);
+            }
+            else if (nuevoEstado == "En Progreso")
+            {
+                totalTareasPendientes.Add(tareaSeleccionada);
+            }
+            else if (nuevoEstado == "Completada")
+            {
+                tareasCompletadas.Add(tareaSeleccionada);
+            }
+
         
+            renderizarTareas();
+            renderizarTotalTareasPendientes();
+            renderizarTareasCompletadas();
+
+            // Limpiar otra vez xd
+            tareaSeleccionada = null;
+        }
+
         private Label CrearEtiquetaTarea(Tarea tarea, Color colorFondo, FlowLayoutPanel panel)
         {
             Label tarjeta = new Label
             {
-                Text = tarea.nombre,
+                Text = $"{tarea.nombre} ({tarea.estado})",
                 AutoSize = true,
                 Padding = new Padding(10),
                 Margin = new Padding(5),
@@ -168,20 +223,17 @@ namespace EjercicioClase1708
                 BorderStyle = BorderStyle.FixedSingle
             };
 
-            
             tarjeta.Click += (sender, e) =>
             {
                 tareaSeleccionada = tarea;
 
-                
                 foreach (Label lbl in panel.Controls)
                 {
                     lbl.BackColor = colorFondo;
                 }
-                tarjeta.BackColor = Color.LightBlue; 
+                tarjeta.BackColor = Color.LightBlue;
             };
 
-            
             tarjeta.DoubleClick += (sender, e) =>
             {
                 if (panel == flowPanelTareaPendientes)
@@ -197,6 +249,7 @@ namespace EjercicioClase1708
                     tareasCompletadas.Remove(tarea);
                 }
 
+                
                 renderizarTareas();
                 renderizarTotalTareasPendientes();
                 renderizarTareasCompletadas();
@@ -211,7 +264,6 @@ namespace EjercicioClase1708
 
             tarjeta.MouseLeave += (sender, e) =>
             {
-                
                 if (tareaSeleccionada == null || tarjeta.Text != tareaSeleccionada.nombre)
                 {
                     tarjeta.BackColor = colorFondo;
@@ -220,6 +272,13 @@ namespace EjercicioClase1708
             };
 
             return tarjeta;
+        }
+
+        private void cmbEstadoTarea_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+               
+              
+            
         }
     }
 }
